@@ -23,17 +23,20 @@ jobs:
       with:
         node-version: 18
 
-    # Install dependencies
+    # Install dependencies (set working-directory if package.json is in a subfolder)
     - name: Install Dependencies
+      working-directory: ./backend  # Change to the correct folder where package.json exists
       run: npm ci
 
     # Run tests and generate coverage
     - name: Run Tests and Coverage
+      working-directory: ./backend  # Change to the correct folder where package.json exists
       run: npm test -- --coverage
 
     # Upload coverage report to GitHub artifact
     - name: Upload Coverage Report
       if: always()
+      working-directory: ./backend  # Change to the correct folder where package.json exists
       uses: actions/upload-artifact@v3
       with:
         name: coverage-report
@@ -57,11 +60,11 @@ jobs:
 
     # Install dependencies
     - name: Install Dependencies
+      working-directory: ./backend  # Change to the correct folder where package.json exists
       run: npm ci
 
     # Deploy application
     - name: Deploy Application
-      env:
-        NODE_ENV: production
+      working-directory: ./backend  # Change to the correct folder where your deployment logic resides
       run: |
         echo "Deploy your application here"
