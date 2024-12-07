@@ -58,9 +58,4 @@ jobs:
     - name: Install Dependencies
       run: npm install
 
-    # Deploy using a script (e.g., to AWS, Heroku, or another environment)
-    - name: Deploy Application
-      env:
-        NODE_ENV: production
-      run: |
-        echo "Deployment script goes here"
+   
