@@ -1,4 +1,4 @@
-name: CI/CD Pipeline
+name: CI/CD Pipeline for Frontend and Backend
 
 on:
   push:
@@ -17,29 +17,53 @@ jobs:
     - name: Checkout Repository
       uses: actions/checkout@v3
 
-    # Set up Node.js environment
-    - name: Setup Node.js
+    # Frontend Setup and Build
+    - name: Set Up Node.js for Frontend
       uses: actions/setup-node@v3
       with:
         node-version: 18
 
-    # Install dependencies (set working-directory if package.json is in a subfolder)
-    - name: Install Dependencies
-      working-directory: ./backend  # Change to the correct folder where package.json exists
+    - name: Install Dependencies for Frontend
+      working-directory: ./country-dashboard-frontend
       run: npm ci
 
-    # Run tests and generate coverage
-    - name: Run Tests and Coverage
-      working-directory: ./backend  # Change to the correct folder where package.json exists
+    - name: Build Frontend
+      working-directory: ./country-dashboard-frontend
+      run: npm run build
+
+    - name: Test Frontend
+      working-directory: ./country-dashboard-frontend
       run: npm test -- --coverage
 
-    # Upload coverage report to GitHub artifact
-    - name: Upload Coverage Report
+    # Backend Setup and Build
+    - name: Set Up Node.js for Backend
+      uses: actions/setup-node@v3
+      with:
+        node-version: 18
+
+    - name: Install Dependencies for Backend
+      working-directory: ./country-dashboard-backend
+      run: npm ci
+
+    - name: Test Backend
+      working-directory: ./country-dashboard-backend
+      run: npm test -- --coverage
+
+    # Upload Coverage Reports
+    - name: Upload Frontend Coverage Report
       if: always()
-      working-directory: ./backend  # Change to the correct folder where package.json exists
+      working-directory: ./country-dashboard-frontend
       uses: actions/upload-artifact@v3
       with:
-        name: coverage-report
+        name: frontend-coverage-report
+        path: coverage/
+
+    - name: Upload Backend Coverage Report
+      if: always()
+      working-directory: ./country-dashboard-backend
+      uses: actions/upload-artifact@v3
+      with:
+        name: backend-coverage-report
         path: coverage/
 
   deploy:
@@ -52,19 +76,14 @@ jobs:
     - name: Checkout Repository
       uses: actions/checkout@v3
 
-    # Set up Node.js environment
-    - name: Setup Node.js
-      uses: actions/setup-node@v3
-      with:
-        node-version: 18
-
-    # Install dependencies
-    - name: Install Dependencies
-      working-directory: ./backend  # Change to the correct folder where package.json exists
-      run: npm ci
-
-    # Deploy application
-    - name: Deploy Application
-      working-directory: ./backend  # Change to the correct folder where your deployment logic resides
+    # Frontend Deployment
+    - name: Deploy Frontend
+      working-directory: ./country-dashboard-frontend
       run: |
-        echo "Deploy your application here"
+        echo "Deploy Frontend Build (e.g., to S3 or static hosting service)"
+
+    # Backend Deployment
+    - name: Deploy Backend
+      working-directory: ./country-dashboard-backend
+      run: |
+        echo "Deploy Backend Application (e.g., to a server or cloud service)"
