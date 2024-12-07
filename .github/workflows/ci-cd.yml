@@ -14,7 +14,7 @@ jobs:
 
     steps:
     # Checkout the repository
-    - name: Checkout Code
+    - name: Checkout Repository
       uses: actions/checkout@v3
 
     # Set up Node.js environment
@@ -25,13 +25,13 @@ jobs:
 
     # Install dependencies
     - name: Install Dependencies
-      run: npm install
+      run: npm ci
 
     # Run tests and generate coverage
-    - name: Run Tests
+    - name: Run Tests and Coverage
       run: npm test -- --coverage
 
-    # Upload coverage report to GitHub artifact (optional)
+    # Upload coverage report to GitHub artifact
     - name: Upload Coverage Report
       if: always()
       uses: actions/upload-artifact@v3
@@ -43,9 +43,10 @@ jobs:
     runs-on: ubuntu-latest
     needs: build-and-test
     if: github.ref == 'refs/heads/production'
+
     steps:
     # Checkout the repository
-    - name: Checkout Code
+    - name: Checkout Repository
       uses: actions/checkout@v3
 
     # Set up Node.js environment
@@ -56,6 +57,11 @@ jobs:
 
     # Install dependencies
     - name: Install Dependencies
-      run: npm install
+      run: npm ci
 
-   
+    # Deploy application
+    - name: Deploy Application
+      env:
+        NODE_ENV: production
+      run: |
+        echo "Deploy your application here"
