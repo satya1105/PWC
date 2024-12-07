@@ -43,6 +43,13 @@ GET /countries: Fetches a list of all countries.
 GET /countries/code/:code: Fetches detailed information about a single country by its code (e.g., "US" for the United States).
 GET /countries/region/:region: Filters countries by region (e.g., "Asia", "Europe").
 GET /countries/search: Searches for countries by name, capital city, region, or timezone.
+
+Test API's like below
+GET all countries: http://localhost:3000/countries
+GET countries by code: http://localhost:3000/countries/IN
+GET countries by region: http://localhost:3000/countries/region/Asia
+GET countries by searching: http://localhost:3000/countries/search?name=India
+
 Frontend Features
 
 Home Page: Displays a list of all countries.
