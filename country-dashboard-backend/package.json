@@ -16,7 +16,8 @@
     "cors": "^2.8.5",
     "dotenv": "^16.4.7",
     "express": "^4.21.1",
-    "node-cache": "^5.1.2"
+    "node-cache": "^5.1.2",
+    "vercel": "^28.18.5"
   },
   "devDependencies": {
     "@types/cors": "^2.8.17",
@@ -31,9 +32,11 @@
     "typescript": "^5.7.2"
   },
   "jest": {
-  "collectCoverage": true,
-  "coverageDirectory": "coverage",
-  "coverageReporters": ["text", "lcov"]
-}
-
+    "collectCoverage": true,
+    "coverageDirectory": "coverage",
+    "coverageReporters": [
+      "text",
+      "lcov"
+    ]
+  }
 }
