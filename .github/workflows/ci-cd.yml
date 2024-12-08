@@ -3,7 +3,7 @@ name: CI/CD for Frontend and Backend
 on:
   push:
     branches:
-      - final-prod # Trigger only for the final-prod branch
+      - final-prod
   pull_request:
     branches:
       - final-prod
@@ -15,11 +15,11 @@ jobs:
 
     steps:
       # Checkout the repository
-      - name: Checkout code
+      - name: Checkout Repository
         uses: actions/checkout@v3
 
       # Set up Node.js
-      - name: Set up Node.js
+      - name: Set Up Node.js
         uses: actions/setup-node@v3
         with:
           node-version: '18'
@@ -35,12 +35,13 @@ jobs:
           cd country-dashboard-frontend
           npm run build
 
-      # Deploy to GitHub Pages
+      # Deploy only the frontend build to GitHub Pages
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./country-dashboard-frontend/out
+          publish_dir: ./country-dashboard-frontend/build
+          cname: your-custom-domain.com # Optional, if you're using a custom domain
 
   backend:
     name: Setup Backend (Skip Tests)
@@ -48,11 +49,11 @@ jobs:
 
     steps:
       # Checkout the repository
-      - name: Checkout code
+      - name: Checkout Repository
         uses: actions/checkout@v3
 
       # Set up Node.js
-      - name: Set up Node.js
+      - name: Set Up Node.js
         uses: actions/setup-node@v3
         with:
           node-version: '18'
@@ -66,4 +67,3 @@ jobs:
       # Skip backend tests
       - name: Skip Backend Tests
         run: echo "Skipping backend tests as requested"
-
