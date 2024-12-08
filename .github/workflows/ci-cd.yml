@@ -28,7 +28,7 @@ jobs:
       - name: Install Dependencies
         run: |
           cd country-dashboard-frontend
-          npm install
+          npm install --legacy-peer-deps
 
       - name: Build Frontend
         run: |
