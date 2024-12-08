@@ -1,4 +1,4 @@
-        name: CI/CD for Frontend and Backend
+name: CI/CD for Frontend and Backend
 
 on:
   push:
@@ -24,7 +24,7 @@ jobs:
         with:
           node-version: '18'
 
-      # Configure homepage for GitHub Pages
+      # Configure homepage in package.json for GitHub Pages
       - name: Set homepage in package.json
         run: |
           cd country-dashboard-frontend
