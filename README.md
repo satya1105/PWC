@@ -1,59 +1,98 @@
-# PWC
-Country Data Dashboard 
-Introduction
+Country Dashboard - Compare Countries Application
 
-This project aims to build a web application that displays information about countries sourced from the REST Countries API. The project includes backend APIs for data retrieval and a frontend interface for user interaction.
+This project is a   enables users to compare two countries based on a variety of data retrieved from the REST Countries API. The application consists of a frontend built with React/Next.js and TypeScript and a backend implemented using Node.js, Express, and TypeScript. It includes features like filtering, searching, and lazy loading to enhance usability. A CI/CD pipeline is set up using GitHub Actions, and the application is hosted on Vercel.
 
-Technologies Used
+Features
+	•	Country Comparison: Users can select and compare two countries side by side.
+	•	Search and Filters:
+	•	Search countries by name or capital city.
+	•	Filter countries by region, timezone, or other criteria.
+	•	Dynamic Loading:
+	•	Lazy-loading with infinite scroll for smooth performance.
+	•	Batch loading of country data.
+	•	Country List Page:
+	•	Displays country details (name, flag, region) in a card layout.
+	•	Shows the current local time of each country.
+	•	Country Detail Page:
+	•	Provides detailed information like population, currency, languages, and region.
+	•	Responsive UI/UX:
+	•	Built with a CSS framework for responsiveness.
+	•	Includes loading and error states for enhanced user experience.
+	•	Backend Caching: Reduces external API calls for better performance.
+	•	Testing and CI/CD:
+	•	Test coverage for backend using Jest.
+	•	GitHub Actions pipeline for CI/CD automation.
 
-Backend: Node.js, Express, TypeScript
-Frontend: React/Next.js, TypeScript
-Project Setup
+Getting Started
 
-Clone the Repository:
+Step 1: Clone the Repository
 
-Bash
-git clone https://github.com/your-username/country-data-dashboard.git
-Use code with caution.
+git clone https://github.com/your-username/your-repo.git
+cd your-repo
 
-Install Dependencies:
+Step 2: Install Dependencies
 
-Bash
-cd country-data-dashboard
+Navigate to both the frontend and backend directories and install the required packages:
+
+For Frontend:
+
+cd country-dashboard-frontend
 npm install
-Use code with caution.
 
-Running the Application
+For Backend:
 
-Start the Backend:
+cd ../country-dashboard-backend
+npm install
 
-Bash
-npm run start:backend
-Use code with caution.
+Step 3: Run the Application
 
-Start the Frontend:
+Start both the frontend and backend servers.
 
-Bash
-npm run start:frontend
-Use code with caution.
+1. Frontend:
 
-Backend API Endpoints
+cd country-dashboard-frontend
+npm run dev
 
-GET /countries: Fetches a list of all countries.
-GET /countries/code/:code: Fetches detailed information about a single country by its code (e.g., "US" for the United States).
-GET /countries/region/:region: Filters countries by region (e.g., "Asia", "Europe").
-GET /countries/search: Searches for countries by name, capital city, region, or timezone.
+The frontend will run on http://localhost:3000.
 
-Test API's like below
-GET all countries: http://localhost:3000/countries
-GET countries by code: http://localhost:3000/countries/IN
-GET countries by region: http://localhost:3000/countries/region/Asia
-GET countries by searching: http://localhost:3000/countries/search?name=India
+2. Backend:
 
-Frontend Features
+cd ../country-dashboard-backend
+npm run dev
 
-Home Page: Displays a list of all countries.
-Country Details Page: Shows detailed information about a specific country.
-Search Functionality: Allows users to search for countries by various criteria.
-Caching: Implements caching to reduce the number of API requests.
-Error Handling: Handles API errors gracefully.
+The backend will run on http://localhost:3001.
+
+Step 4: Test Backend Coverage
+
+Run tests and generate a coverage report for the backend:
+
+cd country-dashboard-backend
+npx jest --coverage
+
+The coverage report will show the percentage of tested backend code.
+
+Deployment
+
+The application uses GitHub Actions for CI/CD. When changes are pushed to the repository, the pipeline automatically:
+	1.	Builds and tests the frontend and backend.
+	2.	Deploys both services to Vercel.
+
+Technology Stack
+	•	Frontend: Next.js (React framework) with TypeScript
+	•	Backend: Node.js, Express, and TypeScript
+	•	Styling: Tailwind CSS or Material-UI for responsive design
+	•	Testing: Jest for backend testing
+	•	CI/CD: GitHub Actions
+	•	Hosting: Vercel
+
+How It Works
+	1.	Users can compare two countries using filters and search features.
+	2.	The frontend communicates with the backend APIs to fetch country data from the REST Countries API.
+	3.	The backend implements caching for better performance and reduces API calls.
+	4.	The application displays data dynamically with lazy-loading and responsive design.
+
+
+
+Author
+
+satya prakash ranjan
