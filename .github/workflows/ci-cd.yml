@@ -1,4 +1,4 @@
-name: CI/CD for Frontend and Backend to Vercel
+name: CI/CD for Frontend and Backend
 
 on:
   push:
@@ -10,18 +10,21 @@ on:
 
 jobs:
   frontend:
-    name: Build and Deploy Frontend to Vercel
+    name: Build and Deploy Frontend
     runs-on: ubuntu-latest
 
     steps:
+      # Checkout the repository
       - name: Checkout Repository
         uses: actions/checkout@v3
 
+      # Set up Node.js
       - name: Set Up Node.js
         uses: actions/setup-node@v3
         with:
           node-version: '18'
 
+      # Install dependencies and build the frontend
       - name: Install Dependencies
         run: |
           cd country-dashboard-frontend
@@ -32,34 +35,35 @@ jobs:
           cd country-dashboard-frontend
           npm run build
 
-      - name: Deploy to Vercel
-        uses: amondnet/vercel-action@v20
+      # Deploy only the frontend build to GitHub Pages
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
         with:
-          vercel-token: ${{ secrets.VERCEL_TOKEN }}
-          vercel-args: '--prod'
-          working-directory: ./country-dashboard-frontend
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./country-dashboard-frontend/build
+          cname: your-custom-domain.com # Optional, if you're using a custom domain
 
   backend:
-    name: Build and Deploy Backend to Vercel
+    name: Setup Backend (Skip Tests)
     runs-on: ubuntu-latest
 
     steps:
+      # Checkout the repository
       - name: Checkout Repository
         uses: actions/checkout@v3
 
+      # Set up Node.js
       - name: Set Up Node.js
         uses: actions/setup-node@v3
         with:
           node-version: '18'
 
+      # Install dependencies for the backend
       - name: Install Dependencies
         run: |
           cd country-dashboard-backend
           npm install
 
-      - name: Deploy to Vercel
-        uses: amondnet/vercel-action@v20
-        with:
-          vercel-token: ${{ secrets.VERCEL_TOKEN }}
-          vercel-args: '--prod'
-          working-directory: ./country-dashboard-backend
+      # Skip backend tests
+      - name: Skip Backend Tests
+        run: echo "Skipping backend tests as requested"
