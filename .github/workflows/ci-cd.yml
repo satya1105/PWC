@@ -1,4 +1,4 @@
-name: CI/CD for Frontend and Backend
+name: CI/CD for Frontend and Backend to Vercel
 
 on:
   push:
@@ -10,7 +10,7 @@ on:
 
 jobs:
   frontend:
-    name: Build and Deploy Frontend
+    name: Build and Deploy Frontend to Vercel
     runs-on: ubuntu-latest
 
     steps:
@@ -35,16 +35,16 @@ jobs:
           cd country-dashboard-frontend
           npm run build
 
-      # Deploy only the frontend build to GitHub Pages
-      - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v3
+      # Deploy to Vercel
+      - name: Deploy to Vercel
+        uses: amondnet/vercel-action@v20
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./country-dashboard-frontend/build
-          cname: your-custom-domain.com # Optional, if you're using a custom domain
+          vercel-token: ${{ secrets.VERCEL_TOKEN }}
+          vercel-args: '--prod'
+          working-directory: ./country-dashboard-frontend
 
   backend:
-    name: Setup Backend (Skip Tests)
+    name: Build and Deploy Backend to Vercel
     runs-on: ubuntu-latest
 
     steps:
@@ -64,6 +64,10 @@ jobs:
           cd country-dashboard-backend
           npm install
 
-      # Skip backend tests
-      - name: Skip Backend Tests
-        run: echo "Skipping backend tests as requested"
+      # Deploy to Vercel
+      - name: Deploy to Vercel
+        uses: amondnet/vercel-action@v20
+        with:
+          vercel-token: ${{ secrets.VERCEL_TOKEN }}
+          vercel-args: '--prod'
+          working-directory: ./country-dashboard-backend
