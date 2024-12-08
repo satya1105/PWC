@@ -35,14 +35,12 @@ jobs:
           cd country-dashboard-frontend
           npm run build
 
-      # Deploy to Vercel
-      - name: Deploy to Vercel
-        uses: amondnet/vercel-action@v20
+      # Deploy to GitHub Pages
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
         with:
-          vercel-token: ZTHIYmBZ9a4pP7SJC1bIOnsN
-          vercel-args: "--prod --yes" # Added --yes for automatic confirmation
-          working-directory: country-dashboard-frontend
-          github-token: ${{ secrets.GITHUB_TOKEN }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./country-dashboard-frontend/out
 
   backend:
     name: Setup Backend (Skip Tests)
