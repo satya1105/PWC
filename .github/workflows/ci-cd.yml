@@ -3,7 +3,7 @@ name: CI/CD for Frontend and Backend
 on:
   push:
     branches:
-      - final-prod # Trigger only for the final-prod branch
+      - final-prod
   pull_request:
     branches:
       - final-prod
@@ -14,17 +14,14 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # Checkout the repository
-      - name: Checkout code
+      - name: Checkout Repository
         uses: actions/checkout@v3
 
-      # Set up Node.js
-      - name: Set up Node.js
+      - name: Set Up Node.js
         uses: actions/setup-node@v3
         with:
           node-version: '18'
 
-      # Install dependencies and build the frontend
       - name: Install Dependencies
         run: |
           cd country-dashboard-frontend
@@ -35,34 +32,33 @@ jobs:
           cd country-dashboard-frontend
           npm run build
 
-      # Deploy to GitHub Pages
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./country-dashboard-frontend/out
+          publish_dir: ./country-dashboard-frontend/build
 
   backend:
-    name: Setup Backend (Skip Tests)
+    name: Build and Deploy Backend
     runs-on: ubuntu-latest
 
     steps:
-      # Checkout the repository
-      - name: Checkout code
+      - name: Checkout Repository
         uses: actions/checkout@v3
 
-      # Set up Node.js
-      - name: Set up Node.js
+      - name: Set Up Node.js
         uses: actions/setup-node@v3
         with:
           node-version: '18'
 
-      # Install dependencies for the backend
       - name: Install Dependencies
         run: |
           cd country-dashboard-backend
           npm install
 
-      # Skip backend tests
-      - name: Skip Backend Tests
-        run: echo "Skipping backend tests as requested"
+      - name: Deploy to Vercel
+        uses: amondnet/vercel-action@v20
+        with:
+          vercel-token: ${{ secrets.VERCEL_TOKEN }}
+          vercel-args: '--prod'
+          working-directory: ./country-dashboard-backend
