@@ -24,12 +24,6 @@ jobs:
         with:
           node-version: '18'
 
-      # Configure homepage in package.json for GitHub Pages
-      - name: Set homepage in package.json
-        run: |
-          cd country-dashboard-frontend
-          sed -i 's|"homepage":.*|"homepage": "https://${{ github.repository_owner }}.github.io/${{ github.repository }}",|' package.json
-
       # Install dependencies and build the frontend
       - name: Install Dependencies
         run: |
@@ -46,7 +40,7 @@ jobs:
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./country-dashboard-frontend/build
+          publish_dir: ./country-dashboard-frontend/out
 
   backend:
     name: Setup Backend (Skip Tests)
@@ -72,3 +66,4 @@ jobs:
       # Skip backend tests
       - name: Skip Backend Tests
         run: echo "Skipping backend tests as requested"
+
