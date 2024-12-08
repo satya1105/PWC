@@ -19,16 +19,16 @@ permissions:
   id-token: write
 
 concurrency:
-  # Allow only one deployment group at a time
+  # Ensure only one deployment runs at a time
   group: "pages"
   cancel-in-progress: false
 
 jobs:
   build:
     # Build job to prepare the site for deployment
-    runs-on: ubuntu-22.04 # Explicitly using Ubuntu 22.04 for compatibility
+    runs-on: ubuntu-22.04
     steps:
-      - name: Checkout code
+      - name: Checkout repository
         uses: actions/checkout@v4
 
       - name: Detect package manager
@@ -47,13 +47,13 @@ jobs:
             exit 1
           fi
 
-      - name: Setup Node.js
+      - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
           node-version: "20"
           cache: ${{ steps.detect-package-manager.outputs.manager }}
 
-      - name: Configure Pages
+      - name: Configure GitHub Pages
         uses: actions/configure-pages@v5
         with:
           static_site_generator: next
@@ -69,7 +69,7 @@ jobs:
       - name: Install dependencies
         run: ${{ steps.detect-package-manager.outputs.manager }} ${{ steps.detect-package-manager.outputs.command }}
 
-      - name: Build the site
+      - name: Build site with Next.js
         run: ${{ steps.detect-package-manager.outputs.runner }} next build
 
       - name: Upload build artifacts
@@ -82,7 +82,7 @@ jobs:
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: ubuntu-22.04 # Explicitly using Ubuntu 22.04 for compatibility
+    runs-on: ubuntu-22.04
     needs: build
     steps:
       - name: Deploy to GitHub Pages
