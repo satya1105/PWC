@@ -27,12 +27,12 @@ jobs:
       # Install dependencies and build the frontend
       - name: Install Dependencies
         run: |
-          cd frontend
+          cd country-dashboard-frontend
           npm install
 
       - name: Build Frontend
         run: |
-          cd frontend
+          cd country-dashboard-frontend
           npm run build
 
       # Deploy to Vercel
@@ -41,7 +41,7 @@ jobs:
         with:
           vercel-token: ZTHIYmBZ9a4pP7SJC1bIOnsN
           vercel-args: "--prod"
-          working-directory: frontend
+          working-directory: country-dashboard-frontend
           github-token: ${{ secrets.GITHUB_TOKEN }}
 
   backend:
@@ -62,11 +62,11 @@ jobs:
       # Install dependencies and build the backend
       - name: Install Dependencies
         run: |
-          cd backend
+          cd country-dashboard-backend
           npm install
 
       # Run backend tests
       - name: Run Tests
         run: |
-          cd backend
+          cd country-dashboard-backend
           npm test
